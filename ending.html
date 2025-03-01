@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Time with Ike">
+    <link rel="apple-touch-icon" href="3.jpg">
+    
+    <!-- Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Time with Ike">
+    <link rel="icon" sizes="192x192" href="3.jpg">
+    
+    <!-- Windows -->
+    <meta name="msapplication-TileImage" content="3.jpg">
+    <meta name="msapplication-TileColor" content="#ff69b4">
+    
+    <!-- General -->
+    <link rel="icon" type="image/jpeg" href="3.jpg">
+    <title>Time with Ike</title>
+    <link rel="stylesheet" href="hearts.css">
+    <link rel="stylesheet" href="ending.css">
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background-animation"></div>
+    
+    <div class="container">
+        <div id="question-container" class="content">
+            <h1 class="final-question">
+                <span class="word">Would</span>
+                <span class="word">you</span>
+                <span class="word">be</span>
+                <span class="word">my</span>
+                <span class="word highlight">boyfriend</span>
+                <span class="word">?</span>
+            </h1>
+            
+            <div class="buttons">
+                <button id="yes-btn" class="choice-button yes">Yes, of course! 💝</button>
+                <button id="no-btn" class="choice-button no">No 💔</button>
+            </div>
+        </div>
+
+        <div id="success-container" class="content hidden">
+            <h2 class="success-message">You've Received a Boyfriend! 💝</h2>
+            <div class="profile-photo">
+                <img src="images/me.jpg" alt="Your new girlfriend" class="main-photo">
+            </div>
+            
+            <div class="time-elapsed-container">
+                <h3 class="time-title">Time with Ike 💖</h3>
+                <div class="time-counter" id="timeCounter">
+                    <div class="time-unit">
+                        <span id="days">00</span>
+                        <label>days</label>
+                    </div>
+                    <div class="time-unit">
+                        <span id="hours">00</span>
+                        <label>hours</label>
+                    </div>
+                    <div class="time-unit">
+                        <span id="minutes">00</span>
+                        <label>minutes</label>
+                    </div>
+                    <div class="time-unit">
+                        <span id="seconds">00</span>
+                        <label>seconds</label>
+                    </div>
+                </div>
+            </div>
+            
+            <h3 class="memories-title">Our Beautiful Memories 💕</h3>
+            <div class="photo-gallery">
+                <div class="coverflow">
+                    <div class="coverflow-container">
+                        <figure class="coverflow-item">
+                            <img src="images/1.jpg" alt="Memory 1">
+                            <div class="reflection"></div>
+                        </figure>
+                        <figure class="coverflow-item">
+                            <img src="images/2.jpg" alt="Memory 2">
+                            <div class="reflection"></div>
+                        </figure>
+                        <figure class="coverflow-item">
+                            <img src="images/3.jpg" alt="Memory 3">
+                            <div class="reflection"></div>
+                        </figure>
+                        <figure class="coverflow-item">
+                            <img src="images/4.jpg" alt="Memory 4">
+                            <div class="reflection"></div>
+                        </figure>
+                        <figure class="coverflow-item">
+                            <img src="images/5.jpg" alt="Memory 5">
+                            <div class="reflection"></div>
+                        </figure>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="rejection-container" class="content hidden">
+            <div class="rejection-message">
+                <div class="crying-face">😢</div>
+                <h2>No worries, I will ask again...</h2>
+                <button id="try-again-btn" class="choice-button">Try Again 💝</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="hearts.js"></script>
+    <script src="ending.js"></script>
+</body>
+</html> 

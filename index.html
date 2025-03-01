@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOVE WORDLE</title>
+    <link rel="stylesheet" href="landing.css">
+    <link rel="stylesheet" href="hearts.css">
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background-animation"></div>
+    
+    <div class="container">
+        <div class="content">
+            <div class="greeting">
+                <span class="word" style="font-size: 2.8rem; font-weight: 800; background: linear-gradient(45deg, #ff6b6b, #ff8787); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase;">Hi</span>
+                <span class="word highlight" style="font-size: 2.8rem; font-weight: 800; background: linear-gradient(45deg, #ff6b6b, #ff8787); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase;">Mr. Stosic</span>
+                <span class="word">💝</span>
+            </div>
+            <h1 class="title">
+                <span class="word">Are</span>
+                <span class="word">you</span>
+                <span class="word">good</span>
+                <span class="word">at</span>
+                <span class="word highlight">WORDLE</span>
+                <span class="word">?</span>
+            </h1>
+
+            <div class="example-tiles">
+                <div class="tile correct">L</div>
+                <div class="tile present">O</div>
+                <div class="tile correct">V</div>
+                <div class="tile absent">E</div>
+            </div>
+
+            <button class="start-button">
+                Accept the Challenge
+                <div class="button-glow"></div>
+            </button>
+        </div>
+    </div>
+
+    <script src="hearts.js"></script>
+    <script src="landing.js"></script>
+    <script>
+        // Initialize heart effects when the page loads
+        window.addEventListener('DOMContentLoaded', () => {
+            initHeartEffects();
+        });
+    </script>
+</body>
+</html> 

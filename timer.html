@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Apple (Add to Home Screen) -->
+    <link rel="apple-touch-icon" sizes="180x180" href="3.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Time with Ike">
+
+    <!-- Android (Add to Home Screen) -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Time with Ike">
+    <link rel="icon" sizes="192x192" href="3.png">
+
+    <!-- Windows (Pinned Tile) -->
+    <meta name="msapplication-TileImage" content="3.png">
+    <meta name="msapplication-TileColor" content="#ff69b4">
+
+    <!-- Fallback general favicon -->
+    <link rel="icon" type="image/png" href="3.png">
+
+    <!-- Title and Styles -->
+    <title>TIME WITH IKE</title>
+    <link rel="stylesheet" href="landing.css">
+    <link rel="stylesheet" href="hearts.css">
+    <link rel="stylesheet" href="ending.css">
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            min-height: 100vh;
+            overflow-y: auto;
+            font-family: 'SF Pro Display', sans-serif;
+            text-transform: uppercase;
+            color: white;
+        }
+        .container {
+            padding: 2rem 0;
+            min-height: 100vh;
+            overflow-y: auto;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .content {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: none;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin: 2rem auto;
+            max-width: 800px;
+            animation: fadeInUp 1s ease-out;
+            position: relative;
+        }
+        .success-message {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            color: white;
+            animation: fadeInUp 1s ease-out 0.2s backwards;
+        }
+        .time-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 2rem 0;
+            opacity: 0.9;
+        }
+        .time-counter {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin: 2rem 0;
+            font-family: 'SF Pro Display', sans-serif;
+        }
+        .time-unit {
+            text-align: center;
+            opacity: 0;
+            animation: fadeInUp 0.5s ease-out forwards;
+        }
+        .time-unit:nth-child(1) { animation-delay: 0.7s; }
+        .time-unit:nth-child(2) { animation-delay: 0.8s; }
+        .time-unit:nth-child(3) { animation-delay: 0.9s; }
+        .time-unit:nth-child(4) { animation-delay: 1s; }
+        .time-unit span {
+            font-size: 5rem;
+            font-weight: 800;
+            display: block;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+        .time-unit label {
+            display: block;
+            font-size: 1rem;
+            font-weight: 500;
+            opacity: 0.7;
+            letter-spacing: 1px;
+        }
+        .memories-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 3rem 0 0;
+            padding-bottom: 0;
+            opacity: 0.9;
+            color: white;
+            animation: fadeInUp 1s ease-out 0.8s backwards;
+            position: relative;
+            z-index: 4;
+        }
+        .profile-photo {
+            width: 200px;
+            height: 200px;
+            margin: 2rem auto;
+            border-radius: 50%;
+            overflow: hidden;
+            animation: fadeInUp 1s ease-out 0.4s backwards;
+        }
+        .main-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+        .photo-gallery {
+            margin: -1rem -2rem 0;
+            padding: 0;
+            position: relative;
+            background: transparent;
+            overflow: hidden;
+        }
+        
+        .coverflow {
+            width: 1000px;
+            height: 320px;
+            margin: 0 auto;
+            position: relative;
+            background: transparent;
+            overflow-x: scroll;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .coverflow::-webkit-scrollbar {
+            display: none;
+        }
+
+        .coverflow img {
+            position: absolute;
+            user-select: none;
+            -webkit-user-select: none;
+            display: block;
+            margin: 0;
+            width: 220px;
+            height: 220px;
+            background: #000;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+            border-radius: 4px;
+            transform-origin: 50% 50%;
+            transform-style: preserve-3d;
+            transition: all 0.3s ease-out;
+            object-fit: cover;
+        }
+
+        .coverflow-title-box {
+            color: white !important;
+            background: rgba(0, 0, 0, 0.5) !important;
+            padding: 8px 15px !important;
+            border-radius: 20px !important;
+            font-size: 0.9rem !important;
+            font-weight: 500 !important;
+            backdrop-filter: blur(5px);
+            text-transform: none !important;
+        }
+        
+        .coverflow-item {
+            position: absolute;
+            width: 200px;
+            height: 280px;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            -webkit-box-reflect: below 0px -webkit-gradient(
+                linear,
+                left top,
+                left bottom,
+                from(transparent),
+                color-stop(70%, transparent),
+                to(rgba(250, 250, 250, 0.1))
+            );
+        }
+        
+        .coverflow-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+        .navigation-buttons {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .nav-button {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'SF Pro Display', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        .nav-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        .nav-button:active {
+            transform: translateY(0);
+        }
+        .time-elapsed-container {
+            animation: fadeInUp 1s ease-out 0.6s backwards;
+        }
+    </style>
+</head>
+<body>
+    <div class="background-animation"></div>
+    
+    <div class="container">
+        <div id="success-container" class="content">
+            <h2 class="success-message">YOU'VE RECEIVED A BOYFRIEND! 💝</h2>
+            <div class="profile-photo">
+                <img src="images/me.jpg" alt="YOUR NEW BOYFRIEND" class="main-photo">
+            </div>
+            
+            <div class="time-elapsed-container">
+                <h3 class="time-title">TIME WITH IKE 💖</h3>
+                <div class="time-counter" id="timeCounter">
+                    <div class="time-unit">
+                        <span id="days">00</span>
+                        <label>DAYS</label>
+                    </div>
+                    <div class="time-unit">
+                        <span id="hours">00</span>
+                        <label>HOURS</label>
+                    </div>
+                    <div class="time-unit">
+                        <span id="minutes">00</span>
+                        <label>MINUTES</label>
+                    </div>
+                    <div class="time-unit">
+                        <span id="seconds">00</span>
+                        <label>SECONDS</label>
+                    </div>
+                </div>
+            </div>
+            
+            <h3 class="memories-title">OUR BEAUTIFUL MEMORIES 💕</h3>
+            <div class="photo-gallery">
+                <div class="coverflow" data-size="220" data-spacing="60" data-shadow="true" data-flat="false" data-bgcolor="transparent" data-width="1000" data-index="4">
+                    <img src="images/1.jpg" data-info="Our First Date 💕" alt="Memory 1">
+                    <img src="images/2.jpg" data-info="Movie Night 🎬" alt="Memory 2">
+                    <img src="images/3.jpg" data-info="Beach Day ⛱️" alt="Memory 3">
+                    <img src="images/4.JPG" data-info="Dinner Date 🍝" alt="Memory 4">
+                    <img src="images/5.jpg" data-info="Park Adventure 🌳" alt="Memory 5">
+                    <img src="images/1.jpg" data-info="Sunset Walk 🌅" alt="Memory 6">
+                    <img src="images/2.jpg" data-info="Coffee Break ☕" alt="Memory 7">
+                    <img src="images/3.jpg" data-info="Weekend Fun 🎉" alt="Memory 8">
+                    <img src="images/4.JPG" data-info="Sweet Moments 💝" alt="Memory 9">
+                    <img src="images/5.jpg" data-info="Together Forever 💑" alt="Memory 10">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="hearts.js"></script>
+    <script src="timer.js"></script>
+    <script src="coverflow.js"></script>
+</body>
+</html> 

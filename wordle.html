@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>LOVE WORDLE</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="hearts.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-pink: #E98F93;
+            --dark-bg: #000000;
+            --dark-surface: #121212;
+            --text-primary: #FFFFFF;
+            --text-secondary: rgba(255, 255, 255, 0.87);
+        }
+
+        html, body {
+            touch-action: pan-x pan-y;
+            height: 100%;
+            background-color: var(--dark-bg);
+            margin: 0;
+            padding: 0;
+            color: var(--text-primary);
+        }
+
+        .game-container {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Add romantic pattern overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(233, 143, 147, 0.1) 0%, transparent 8%),
+                radial-gradient(circle at 80% 80%, rgba(233, 143, 147, 0.1) 0%, transparent 4%);
+            background-size: 60px 60px;
+            animation: patternMove 30s linear infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes patternMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 60px 60px; }
+        }
+
+        #game-board {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .letter-row {
+            display: flex;
+            justify-content: center;
+            margin: 5px 0;
+        }
+
+        #keyboard-cont {
+            margin: 1rem 0;
+        }
+
+        .second-row {
+            margin: 0.5rem 0;
+        }
+
+        #hint-area {
+            background: var(--dark-surface);
+            color: var(--primary-pink);
+            border: 1px solid rgba(233, 143, 147, 0.2);
+        }
+
+        .title-container h1 {
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, var(--primary-pink), #ff8787);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: 'Archivo Black', 'SF Pro Display', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div class="background-animation"></div>
+    
+    <div class="game-container">
+        <div class="title-section">
+            <div class="title-container">
+                <h1>LOVE WORDLE</h1>
+                <div class="title-underline"></div>
+            </div>
+            <div id="message-area" class="content" style="background: rgba(18, 18, 18, 0.7); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-radius: 24px; box-shadow: 0 8px 32px rgba(233, 143, 147, 0.1), inset 0 0 0 1px rgba(233, 143, 147, 0.1); padding: 1.5rem; margin: 1rem auto; max-width: 600px; position: relative; overflow: hidden;"></div>
+        </div>
+        
+        <div id="game-board">
+        </div>
+
+        <div id="keyboard-cont">
+            <div class="first-row">
+                <button class="keyboard-button">q</button>
+                <button class="keyboard-button">w</button>
+                <button class="keyboard-button">e</button>
+                <button class="keyboard-button">r</button>
+                <button class="keyboard-button">t</button>
+                <button class="keyboard-button">y</button>
+                <button class="keyboard-button">u</button>
+                <button class="keyboard-button">i</button>
+                <button class="keyboard-button">o</button>
+                <button class="keyboard-button">p</button>
+            </div>
+            <div class="second-row">
+                <button class="keyboard-button">a</button>
+                <button class="keyboard-button">s</button>
+                <button class="keyboard-button">d</button>
+                <button class="keyboard-button">f</button>
+                <button class="keyboard-button">g</button>
+                <button class="keyboard-button">h</button>
+                <button class="keyboard-button">j</button>
+                <button class="keyboard-button">k</button>
+                <button class="keyboard-button">l</button>
+            </div>
+            <div class="third-row">
+                <button class="keyboard-button">Del</button>
+                <button class="keyboard-button">z</button>
+                <button class="keyboard-button">x</button>
+                <button class="keyboard-button">c</button>
+                <button class="keyboard-button">v</button>
+                <button class="keyboard-button">b</button>
+                <button class="keyboard-button">n</button>
+                <button class="keyboard-button">m</button>
+                <button class="keyboard-button">Enter</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="hearts.js"></script>
+    <script src="words.js" type="module"></script>
+    <script src="script.js" type="module"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            initHeartEffects();
+        });
+    </script>
+</body>
+</html> 
