@@ -40,42 +40,51 @@ function showAddToHomeScreenPrompt() {
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.95);
-            padding: 15px 20px;
-            border-radius: 15px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: none;
             z-index: 10000;
             max-width: 90%;
             width: 320px;
             animation: slideUp 0.5s ease;
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 192, 203, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-transform: none;
         }
         
         .prompt-content {
             text-align: center;
             font-size: 0.95em;
-            color: #333;
+            color: white;
         }
         
         .prompt-content p {
             margin: 0 0 15px 0;
             line-height: 1.4;
+            opacity: 0.9;
         }
         
         .close-prompt {
-            background: #ff69b4;
-            color: white;
+            background: rgba(255, 255, 255, 0.1);
             border: none;
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-weight: bold;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-family: 'SF Pro Display', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
             cursor: pointer;
-            transition: background 0.3s ease;
         }
         
         .close-prompt:hover {
-            background: #ff4da6;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .close-prompt:active {
+            transform: translateY(0);
         }
         
         @keyframes slideUp {

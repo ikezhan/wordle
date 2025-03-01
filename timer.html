@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
     <!-- Apple (Add to Home Screen) -->
     <link rel="apple-touch-icon" sizes="180x180" href="3.png">
@@ -35,20 +35,43 @@
             font-family: 'SF Pro Display', sans-serif;
             text-transform: uppercase;
             color: white;
+            touch-action: pan-x pan-y;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            margin: 0;
+            padding: 0;
         }
+        
+        html {
+            touch-action: manipulation;
+            -webkit-text-size-adjust: none;
+        }
+
         .container {
-            padding: 2rem 0;
+            padding: 1rem;
             min-height: 100vh;
             overflow-y: auto;
+            touch-action: pan-y;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            box-sizing: border-box;
+            width: 100%;
         }
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(30px);
+                filter: blur(10px);
             }
             to {
                 opacity: 1;
                 transform: translateY(0);
+                filter: blur(0);
             }
         }
         .content {
@@ -59,10 +82,14 @@
             text-align: center;
             box-shadow: none;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            margin: 2rem auto;
+            margin: 1rem auto;
             max-width: 800px;
-            animation: fadeInUp 1s ease-out;
+            width: 95%;
+            animation: fadeInScale 1s cubic-bezier(0.23, 1, 0.32, 1);
             position: relative;
+            box-sizing: border-box;
+            opacity: 0;
+            animation: fadeInScale 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
         }
         .success-message {
             font-size: 2.5rem;
@@ -80,19 +107,35 @@
         .time-counter {
             display: flex;
             justify-content: center;
-            gap: 3rem;
-            margin: 2rem 0;
+            gap: 2rem;
+            margin: 2rem auto;
+            flex-wrap: wrap;
             font-family: 'SF Pro Display', sans-serif;
+            max-width: 600px;
         }
         .time-unit {
             text-align: center;
             opacity: 0;
-            animation: fadeInUp 0.5s ease-out forwards;
+            animation: fadeInUnit 0.5s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+            min-width: 100px;
+            transform-origin: center center;
         }
-        .time-unit:nth-child(1) { animation-delay: 0.7s; }
-        .time-unit:nth-child(2) { animation-delay: 0.8s; }
-        .time-unit:nth-child(3) { animation-delay: 0.9s; }
-        .time-unit:nth-child(4) { animation-delay: 1s; }
+        @keyframes fadeInUnit {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(20px);
+                filter: blur(5px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+                filter: blur(0);
+            }
+        }
+        .time-unit:nth-child(1) { animation-delay: 0.3s; }
+        .time-unit:nth-child(2) { animation-delay: 0.4s; }
+        .time-unit:nth-child(3) { animation-delay: 0.5s; }
+        .time-unit:nth-child(4) { animation-delay: 0.6s; }
         .time-unit span {
             font-size: 5rem;
             font-weight: 800;
@@ -133,7 +176,7 @@
             object-position: center;
         }
         .photo-gallery {
-            margin: -1rem -2rem 0;
+            margin: -1rem -1rem 0;
             padding: 0;
             position: relative;
             background: transparent;
@@ -141,13 +184,16 @@
         }
         
         .coverflow {
-            width: 1000px;
+            width: 100%;
+            max-width: 1000px;
             height: 320px;
             margin: 0 auto;
             position: relative;
             background: transparent;
             overflow-x: scroll;
             -webkit-overflow-scrolling: touch;
+            touch-action: pan-x;
+            -ms-touch-action: pan-x;
         }
 
         .coverflow::-webkit-scrollbar {
@@ -237,10 +283,281 @@
         .time-elapsed-container {
             animation: fadeInUp 1s ease-out 0.6s backwards;
         }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 1.5rem;
+                margin: 0.5rem auto;
+            }
+            .success-message {
+                font-size: 2rem;
+                margin-bottom: 1.5rem;
+            }
+            .time-title {
+                font-size: 1.5rem;
+                margin: 1.5rem 0;
+            }
+            .time-counter {
+                gap: 1rem;
+            }
+            .time-unit {
+                min-width: 70px;
+            }
+            .time-unit span {
+                font-size: 2.5rem;
+            }
+            .time-unit label {
+                font-size: 0.8rem;
+            }
+            .photo-gallery {
+                margin: -1rem -1rem 0;
+            }
+            .coverflow {
+                height: 280px;
+            }
+            .coverflow img {
+                width: 180px;
+                height: 180px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0.5rem;
+            }
+            .content {
+                padding: 1rem;
+                width: 100%;
+            }
+            .success-message {
+                font-size: 1.8rem;
+            }
+            .time-counter {
+                gap: 0.5rem;
+                padding: 0;
+            }
+            .time-unit {
+                min-width: 45px;
+            }
+            .time-unit span {
+                font-size: 1.6rem;
+                margin-bottom: 0.2rem;
+            }
+            .time-unit label {
+                font-size: 0.6rem;
+                letter-spacing: 0.5px;
+            }
+            .coverflow {
+                height: 240px;
+            }
+            .coverflow img {
+                width: 160px;
+                height: 160px;
+            }
+            .a2hs-prompt {
+                width: calc(100% - 40px) !important;
+                bottom: 15px !important;
+            }
+        }
+
+        /* Portrait mode specific adjustments */
+        @media (max-width: 480px) and (orientation: portrait) {
+            .photo-gallery {
+                margin: -0.5rem -0.5rem 0;
+                width: 100vw;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .coverflow {
+                height: 200px;
+                -webkit-perspective: 600px;
+                perspective: 600px;
+                max-width: 100vw;
+                width: 100vw !important;
+                transform: scale(0.85);
+                transform-origin: center center;
+            }
+
+            .coverflow img {
+                width: 120px;
+                height: 120px;
+                transform-origin: 50% 50% -60px;
+            }
+
+            .coverflow-item {
+                width: 120px;
+                height: 160px;
+            }
+
+            .coverflow-title-box {
+                font-size: 0.8rem !important;
+                padding: 6px 12px !important;
+                width: auto !important;
+                white-space: nowrap;
+                transform: translateX(-50%);
+            }
+        }
+
+        /* Landscape mode specific adjustments */
+        @media (max-width: 480px) and (orientation: landscape) {
+            .photo-gallery {
+                margin: -1rem -1rem 0;
+            }
+            
+            .coverflow {
+                height: 240px;
+                -webkit-perspective: 800px;
+                perspective: 800px;
+            }
+
+            .coverflow img {
+                width: 160px;
+                height: 160px;
+                transform-origin: 50% 50% -80px;
+            }
+
+            .coverflow-item {
+                width: 160px;
+                height: 220px;
+            }
+        }
+
+        /* Hide unwanted install prompts */
+        button[aria-label*="home screen"],
+        button[aria-label*="Home Screen"],
+        button[aria-label*="Add to"],
+        button[aria-label*="add to"],
+        .install-button,
+        .pwa-install-button,
+        [role="button"][aria-label*="home screen"],
+        [role="button"][aria-label*="Home Screen"],
+        div[role="dialog"]:not(.a2hs-prompt),
+        div[class*="install"]:not(.a2hs-prompt),
+        div[class*="prompt"]:not(.a2hs-prompt),
+        div[class*="banner"]:not(.a2hs-prompt) {
+            display: none !important;
+            opacity: 0 !important;
+            visibility: hidden !important;
+            pointer-events: none !important;
+        }
+
+        /* Custom Add to Home Screen Prompt */
+        .a2hs-prompt {
+            display: block !important;
+            position: fixed !important;
+            bottom: 20px !important;
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+            background: rgba(255, 255, 255, 0.2) !important;
+            backdrop-filter: blur(8px) !important;
+            -webkit-backdrop-filter: blur(8px) !important;
+            padding: 8px 16px !important;
+            border-radius: 16px !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+            border: 1px solid rgba(255, 255, 255, 0.3) !important;
+            z-index: 9999 !important;
+            text-align: center !important;
+            font-family: 'SF Pro Display', sans-serif !important;
+            color: white !important;
+            pointer-events: auto !important;
+            animation: fadeInUp 0.5s ease-out !important;
+            cursor: pointer !important;
+            width: fit-content !important;
+            min-width: auto !important;
+            max-width: 90% !important;
+            white-space: nowrap !important;
+            line-height: 1.2 !important;
+        }
+
+        .a2hs-title {
+            font-size: 0.9rem !important;
+            font-weight: 600 !important;
+            margin-bottom: 2px !important;
+            text-transform: none !important;
+        }
+
+        .a2hs-instructions {
+            font-size: 0.8rem !important;
+            font-weight: 400 !important;
+            opacity: 0.9 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 2px !important;
+            text-transform: none !important;
+        }
+
+        .a2hs-icon {
+            font-size: 1rem !important;
+            margin-right: 1px !important;
+        }
+
+        .share-icon {
+            font-size: 1.1rem !important;
+            transform: scaleY(-1) !important;
+            display: inline-block !important;
+            margin: 0 1px !important;
+        }
+
+        @media (max-width: 480px) {
+            .a2hs-prompt {
+                padding: 6px 14px !important;
+            }
+            
+            .a2hs-title {
+                font-size: 0.85rem !important;
+            }
+            
+            .a2hs-instructions {
+                font-size: 0.75rem !important;
+            }
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.98);
+                filter: blur(10px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+                filter: blur(0);
+            }
+        }
+
+        /* Hide in standalone mode */
+        @media (display-mode: standalone) {
+            .a2hs-prompt {
+                display: none !important;
+            }
+        }
+
+        /* Additional meta viewport settings */
+        @-ms-viewport {
+            width: device-width;
+            user-scalable: no;
+            zoom: 1;
+        }
+
+        @viewport {
+            width: device-width;
+            user-scalable: no;
+            zoom: 1;
+        }
     </style>
 </head>
 <body>
     <div class="background-animation"></div>
+    
+    <div class="a2hs-prompt">
+        <div class="a2hs-title">Save Our Timer</div>
+        <div class="a2hs-instructions">
+            <span class="a2hs-icon">📱</span>
+            Tap <span class="share-icon">⌄</span> then "Add to Home Screen"
+        </div>
+    </div>
     
     <div class="container">
         <div id="success-container" class="content">
@@ -292,5 +609,32 @@
     <script src="hearts.js"></script>
     <script src="timer.js"></script>
     <script src="coverflow.js"></script>
+    <script>
+        // Add to Home Screen Prompt Handler
+        window.addEventListener('load', () => {
+            // Only show prompt if not in standalone mode and not previously dismissed
+            if (!window.matchMedia('(display-mode: standalone)').matches && !localStorage.getItem('a2hs-dismissed')) {
+                const prompt = document.querySelector('.a2hs-prompt');
+                if (prompt) {
+                    // Show prompt after a short delay
+                    setTimeout(() => {
+                        prompt.style.display = 'block';
+                    }, 2000);
+
+                    // Auto-hide after 10 seconds
+                    setTimeout(() => {
+                        prompt.style.display = 'none';
+                        localStorage.setItem('a2hs-dismissed', 'true');
+                    }, 12000);
+
+                    // Hide on tap
+                    prompt.addEventListener('click', () => {
+                        prompt.style.display = 'none';
+                        localStorage.setItem('a2hs-dismissed', 'true');
+                    });
+                }
+            }
+        });
+    </script>
 </body>
 </html> 

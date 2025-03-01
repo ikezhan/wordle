@@ -20,6 +20,12 @@ License: The MIT License
         };
         var displayIndex = function (imgSize, spacing, left, imgs, index, flat, width, titleBox) {
             var mLeft = (width - imgSize) * .5 - spacing * (index + 1) - imgSize * .5;
+            
+            // Adjust for mobile portrait
+            if (window.innerWidth <= 480 && window.innerHeight > window.innerWidth) {
+                mLeft = (window.innerWidth - imgSize) * .5 - spacing * (index + 1) - imgSize * .5;
+            }
+
             for (var i = 0; i <= index; ++i) {
                 imgs[i].style.left = (left + i * spacing + spacing) + "px";
                 imgs[i].style.marginLeft = mLeft + "px";
@@ -133,5 +139,34 @@ License: The MIT License
         var coverflows = document.getElementsByClassName("coverflow");
         for (var i = 0; i < coverflows.length; ++i)
             initCoverFlow(coverflows[i]);
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const coverflow = document.querySelector('.coverflow');
+            
+            function updateSpacing() {
+                const isPortrait = window.innerHeight > window.innerWidth;
+                const isMobile = window.innerWidth <= 480;
+                
+                if (isMobile) {
+                    if (isPortrait) {
+                        coverflow.setAttribute('data-spacing', '30');
+                        coverflow.setAttribute('data-size', '120');
+                        coverflow.setAttribute('data-width', window.innerWidth.toString());
+                    } else {
+                        coverflow.setAttribute('data-spacing', '50');
+                        coverflow.setAttribute('data-size', '160');
+                    }
+                } else {
+                    coverflow.setAttribute('data-spacing', '60');
+                    coverflow.setAttribute('data-size', '220');
+                }
+                
+                // Re-initialize the coverflow
+                initCoverFlow(coverflow);
+            }
+            
+            window.addEventListener('resize', updateSpacing);
+            updateSpacing();
+        });
     }
 })(); 
