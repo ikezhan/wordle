@@ -182,14 +182,26 @@ function checkGuess () {
                 messageArea.style.animation = "celebrate 1s ease infinite";
                 guessesRemaining = 0;
                 
-                // Add redirection to ending page after a delay
+                // Create page transition element
+                const pageTransition = document.createElement('div');
+                pageTransition.className = 'page-transition';
+                document.body.appendChild(pageTransition);
+                
+                // Add transition animation
                 setTimeout(() => {
-                    document.body.style.opacity = '0';
-                    document.body.style.transition = 'opacity 0.5s ease';
+                    // Fade out current content
+                    document.querySelector('.game-container').style.animation = 'contentFadeOut 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards';
+                    
+                    // Start page transition
                     setTimeout(() => {
-                        window.location.href = 'question.html';
+                        pageTransition.style.animation = 'pageTransitionIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards';
+                        
+                        setTimeout(() => {
+                            pageTransition.style.animation = 'pageTransitionOut 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards';
+                            window.location.href = 'question.html';
+                        }, 800);
                     }, 500);
-                }, 1500); // Reduced from 3000 to 1500 ms
+                }, 1000);
             } else {
                 currentWordIndex++;
                 rightGuessString = MESSAGE_WORDS[currentWordIndex];

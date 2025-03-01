@@ -20,35 +20,47 @@ document.addEventListener('DOMContentLoaded', () => {
         startButton.style.background = 'linear-gradient(45deg, #ff6b6b, #ff8787)';
     });
 
+    // Create page transition element
+    const pageTransition = document.createElement('div');
+    pageTransition.className = 'page-transition';
+    document.body.appendChild(pageTransition);
+
     // Handle start button click with enhanced animation
     startButton.addEventListener('click', () => {
+        // Disable button to prevent multiple clicks
+        startButton.disabled = true;
+        
+        // Animate content out
         const content = document.querySelector('.content');
-        content.style.animation = 'fadeOut 0.5s ease forwards';
+        content.style.animation = 'contentFadeOut 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards';
         
         // Create heart burst effect
         createHeartBurst(event.clientX, event.clientY);
         
-        // Redirect to the game after animation
+        // Start page transition
         setTimeout(() => {
-            document.body.style.opacity = '0';
-            document.body.style.transition = 'opacity 0.5s ease';
+            pageTransition.style.animation = 'pageTransitionIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards';
+            
             setTimeout(() => {
+                pageTransition.style.animation = 'pageTransitionOut 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards';
                 window.location.href = 'game.html';
-            }, 500);
-        }, 1500);
+            }, 800);
+        }, 500);
     });
 
-    // Add fade-out and heart burst animations
+    // Add enhanced animations
     const style = document.createElement('style');
     style.textContent = `
-        @keyframes fadeOut {
-            from {
+        @keyframes contentFadeOut {
+            0% {
                 opacity: 1;
                 transform: scale(1);
+                filter: blur(0);
             }
-            to {
+            100% {
                 opacity: 0;
-                transform: scale(0.95);
+                transform: scale(0.98);
+                filter: blur(10px);
             }
         }
 
@@ -60,6 +72,29 @@ document.addEventListener('DOMContentLoaded', () => {
             100% {
                 opacity: 0;
                 transform: scale(0);
+            }
+        }
+
+        .heart-burst {
+            position: fixed;
+            font-size: 2rem;
+            pointer-events: none;
+            z-index: 9999;
+            animation: burstAnimation 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        @keyframes burstAnimation {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.5);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(2);
+                opacity: 0;
             }
         }
     `;
@@ -110,51 +145,47 @@ function createFloatingHearts() {
 }
 
 function createHeartBurst(x, y) {
-    const container = document.createElement('div');
-    container.style.position = 'fixed';
-    container.style.left = '0';
-    container.style.top = '0';
-    container.style.width = '100%';
-    container.style.height = '100%';
-    container.style.pointerEvents = 'none';
-    container.style.zIndex = '9999';
-    document.body.appendChild(container);
-
-    const numHearts = 15;
     const hearts = ['💝', '💖', '💗', '💓', '💕'];
+    const burstContainer = document.createElement('div');
+    burstContainer.style.position = 'fixed';
+    burstContainer.style.left = '0';
+    burstContainer.style.top = '0';
+    burstContainer.style.width = '100%';
+    burstContainer.style.height = '100%';
+    burstContainer.style.pointerEvents = 'none';
+    burstContainer.style.zIndex = '9998';
+    document.body.appendChild(burstContainer);
 
-    for (let i = 0; i < numHearts; i++) {
+    for (let i = 0; i < 15; i++) {
         const heart = document.createElement('div');
+        heart.className = 'heart-burst';
         heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
-        heart.style.position = 'absolute';
-        heart.style.left = `${x}px`;
-        heart.style.top = `${y}px`;
-        heart.style.fontSize = '1.5rem';
-        heart.style.userSelect = 'none';
         
-        const angle = (i / numHearts) * 360;
-        const velocity = 2 + Math.random() * 2;
-        const fadeDelay = 100 + Math.random() * 200;
+        const angle = (Math.random() * 360) * (Math.PI / 180);
+        const distance = 100 + Math.random() * 100;
+        const startX = x - window.scrollX;
+        const startY = y - window.scrollY;
         
-        heart.style.animation = `
-            moveHeart${i} 0.8s ease-out forwards,
-            fadeHeart 0.8s ease-out forwards
-        `;
-
-        const keyframes = `
-            @keyframes moveHeart${i} {
-                0% {
-                    transform: translate(-50%, -50%) rotate(${Math.random() * 360}deg);
-                }
-                100% {
-                    transform: 
-                        translate(
-                            ${Math.cos(angle * Math.PI / 180) * 100 * velocity}px,
-                            ${Math.sin(angle * Math.PI / 180) * 100 * velocity}px
-                        )
-                        rotate(${360 + Math.random() * 360}deg);
-                }
-            }
-        `;
+        heart.style.left = `${startX}px`;
+        heart.style.top = `${startY}px`;
+        heart.style.transform = `translate(-50%, -50%)`;
+        
+        const endX = startX + Math.cos(angle) * distance;
+        const endY = startY + Math.sin(angle) * distance;
+        
+        heart.animate([
+            { transform: 'translate(-50%, -50%) scale(0.3)', offset: 0 },
+            { transform: `translate(${endX - startX}px, ${endY - startY}px) scale(1.5)`, offset: 0.5 },
+            { transform: `translate(${endX - startX}px, ${endY - startY}px) scale(0)`, offset: 1 }
+        ], {
+            duration: 1000,
+            easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
+            fill: 'forwards'
+        });
+        
+        burstContainer.appendChild(heart);
+        setTimeout(() => heart.remove(), 1000);
     }
+    
+    setTimeout(() => burstContainer.remove(), 1000);
 }
